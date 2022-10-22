@@ -2,19 +2,22 @@ from base import Base
 
 
 class User(Base):
-    def create(self, user):
-        self.cursor.execute(
-            "INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)",
-            (
-                user.fullname,
-                user.username,
-                user.password,
-                user.email,
-                user.gender,
-                user.birthday,
-            ),
-        )
-        self.conn.commit()
+    def __init__(self, db_name):
+        Base.__init__(self, db_name, "users")
+
+    # def create(self, user):
+    #     self.cursor.execute(
+    #         "INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)",
+    #         (
+    #             user.fullname,
+    #             user.username,
+    #             user.password,
+    #             user.email,
+    #             user.gender,
+    #             user.birthday,
+    #         ),
+    #     )
+    #     self.conn.commit()
 
     def update(self, user):
         self.cursor.execute(
@@ -31,10 +34,22 @@ class User(Base):
         )
         self.conn.commit()
 
-    def delete(self, id):
-        self.cursor.execute("DELETE FROM users WHERE id=?", (id,))
-        self.conn.commit()
 
-    def get_by_id(self, id):
-        self.cursor.execute("SELECT * FROM users WHERE id=?", (id,))
-        return self.cursor.fetchone()
+user = User(
+    "dasds",
+)
+
+
+class deneme:
+    def __init__(self, id, fullname, username, age):
+        self.id = id
+        self.fullname = fullname
+        self.username = username
+        self.age = age
+
+
+x = deneme(1, "apo", "simsek", 22)
+
+user.delete(1)
+user.get_by_id(2)
+user.create(x)
