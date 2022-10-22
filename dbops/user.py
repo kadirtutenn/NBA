@@ -1,55 +1,50 @@
-from base import Base
+from .base import Base
 
 
-class User(Base):
+class user(Base):
     def __init__(self, db_name):
         Base.__init__(self, db_name, "users")
 
-    # def create(self, user):
-    #     self.cursor.execute(
-    #         "INSERT INTO users VALUES(NULL, ?, ?, ?, ?, ?, ?)",
-    #         (
-    #             user.fullname,
-    #             user.username,
-    #             user.password,
-    #             user.email,
-    #             user.gender,
-    #             user.birthday,
-    #         ),
-    #     )
-    #     self.conn.commit()
+    def create(self, user):
+        self.cursor.execute(
+            "INSERT INTO users VALUES(NULL, ?, ?)",
+            (
+                user.email,
+                user.password,
+            ),
+        )
+        self.conn.commit()
 
     def update(self, user):
         self.cursor.execute(
-            "UPDATE users SET fullname=?, username=?, email=?, birthday=?, password=?, gender=? WHERE id=?",
+            "UPDATE users SET email=?, password=? WHERE id=?",
             (
-                user.fullname,
-                user.username,
                 user.email,
-                user.birthday,
                 user.password,
-                user.gender,
                 user.id,
             ),
         )
         self.conn.commit()
 
+    def get_by_email(self, email):
+        self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE email=?", (email,))
+        return self.cursor.fetchone()
 
-user = User(
-    "dasds",
+
+User = user(
+    "testing.db",
 )
 
 
-class deneme:
-    def __init__(self, id, fullname, username, age):
-        self.id = id
-        self.fullname = fullname
-        self.username = username
-        self.age = age
+# class deneme:
+#     def __init__(self, id, email, password):
+#         self.id = id
+#         self.email = email
+#         self.password = password
 
 
-x = deneme(1, "apo", "simsek", 22)
-
-user.delete(1)
-user.get_by_id(2)
-user.create(x)
+# x = deneme(1, "apo@test.com", "121599")
+# email = "apo@test.com"
+# User.create(x)
+# y = User.get_by_email(email)
+# print(y["password"])

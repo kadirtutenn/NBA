@@ -13,15 +13,25 @@
 				<h1 class="word">Register</h1>
 			</div></br></br></br>
 			<h2 class="word">
-				<form action="{{ url_for('register') }}" method="post">
+				<form action="{{ url_for('auth_api.register') }}" method="post">
 				<div class="msg">{{ msg }}</div>
-					<input id="username" name="username" type="text" placeholder="Enter Your Username" class="textbox"/></br></br>
-					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
 					<input id="email" name="email" type="text" placeholder="Enter Your Email ID" class="textbox"/></br></br>
+
+					<input id="password" name="password" type="password" placeholder="Enter Your Password" class="textbox"/></br></br>
+					{% with messages = get_flashed_messages() %}
+					{% if messages %}
+					  <ul class=flashes>
+					  {% for message in messages %}
+						<li>{{ message }}</li>
+					  {% endfor %}
+					  </ul>
+					{% endif %}
+				  {% endwith %}
+				  {% block body %}{% endblock %}
 					<input type="submit" class="btn" value="Sign Up"></br>
 				</form>
 			</h2>
-			<p class="bottom">Already have an account? <a class="bottom" href="{{url_for('login')}}"> Sign In here</a></p>
+			<p class="bottom">Already have an account? <a class="bottom" href="{{url_for('auth_api.login')}}"> Sign In here</a></p>
 		</div>
 		</div>
 	</body>
