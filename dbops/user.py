@@ -1,3 +1,4 @@
+from tkinter.messagebox import NO
 from .base import Base
 
 
@@ -9,8 +10,8 @@ class user(Base):
         self.cursor.execute(
             "INSERT INTO users VALUES(NULL, ?, ?)",
             (
-                user.email,
-                user.password,
+                user["email"],
+                user["password"],
             ),
         )
         self.conn.commit()
@@ -19,16 +20,55 @@ class user(Base):
         self.cursor.execute(
             "UPDATE users SET email=?, password=? WHERE id=?",
             (
-                user.email,
-                user.password,
-                user.id,
+                user["email"],
+                user["password"],
+                user["id"],
             ),
         )
         self.conn.commit()
 
     def get_by_email(self, email):
-        self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE email=?", (email,))
-        return self.cursor.fetchone()
+        User = {}
+        try:
+            self.cursor.execute(
+                f"SELECT * FROM {self.table_name} WHERE email=?", (email,)
+            )
+            row = self.cursor.fetchone()
+            User["email"] = row["email"]
+            User["password"] = row["password"]
+            User["id"] = row["id"]
+        except:
+            User = None
+        return User
+
+    def get_by_id(self, id):
+        User = {}
+        try:
+            self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE id=?", (id,))
+            row = self.cursor.fetchone()
+            User["email"] = row["email"]
+            User["password"] = row["password"]
+            User["id"] = row["id"]
+        except:
+            User = None
+
+        return User
+
+    def get_all(self):
+        Users = []
+        try:
+            self.cursor.execute(f"SELECT * FROM {self.table_name}")
+            rows = self.cursor.fetchall()
+            print(rows)
+            for row in rows:
+                User = {}
+                User["email"] = row["email"]
+                User["password"] = row["password"]
+                User["id"] = row["id"]
+                Users.append(User)
+        except:
+            Users = None
+        return Users
 
 
 User = user(

@@ -2,7 +2,6 @@ import email
 from flask import Blueprint, redirect, render_template, request
 from flask import flash, url_for, session, jsonify
 from dbops.user import User
-from models.user import userClass
 
 api = Blueprint("auth_api", __name__)
 
@@ -21,8 +20,8 @@ def register():
         if User.get_by_email(email):
             flash("Given email already exist!!!")
             return redirect(url_for("auth_api.register"))
-        newUSer = userClass(None, email, password)
-        user = User.create(newUSer)
+        # newUSer = userClass(None, email, password)
+        User.create({"email": email, "password": password})
         flash("successfully registered, please login")
         return redirect(url_for("auth_api.login"))
 

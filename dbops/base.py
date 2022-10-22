@@ -13,6 +13,6 @@ class Base:
         self.cursor.execute(f"DELETE FROM {self.table_name} WHERE id=?", (id,))
         self.conn.commit()
 
-    def get_by_id(self, id):
-        self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE id=?", (id,))
-        return self.cursor.fetchone()
+    # def get_by_id(self, id):
+    #     self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE id=?", (id,))
+    #     return self.cursor.fetchone()

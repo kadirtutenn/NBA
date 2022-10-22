@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-api = Blueprint("teams_api", __name__)
+api = Blueprint("team_api", __name__)
 
 
 @api.route("/get", methods=["POST", "GET"])

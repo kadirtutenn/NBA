@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request, render_template, flash
 from schemas import RegistrationForm
 from api.auth.views import api as auth_api
-from api.teams.views import api as teams_api
-from api.players.views import api as players_api
+from api.team.views import api as team_api
+from api.player.views import api as player_api
+from api.user.views import api as user_api
 
 
 app = Flask(__name__)
@@ -10,8 +11,9 @@ app.config["SECRET_KEY"] = "somesecretkey"
 
 
 app.register_blueprint(blueprint=auth_api, url_prefix="/api/auth")
-app.register_blueprint(blueprint=teams_api, url_prefix="/api/teams")
-app.register_blueprint(blueprint=players_api, url_prefix="/api/players")
+app.register_blueprint(blueprint=team_api, url_prefix="/api/team")
+app.register_blueprint(blueprint=player_api, url_prefix="/api/player")
+app.register_blueprint(blueprint=user_api, url_prefix="/api/user")
 
 
 if __name__ == "__main__":
