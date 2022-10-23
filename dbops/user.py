@@ -1,4 +1,3 @@
-from tkinter.messagebox import NO
 from .base import Base
 
 
@@ -7,6 +6,7 @@ class user(Base):
         Base.__init__(self, db_name, "users")
 
     def create(self, user):
+
         self.cursor.execute(
             "INSERT INTO users VALUES(NULL, ?, ?)",
             (
@@ -42,10 +42,10 @@ class user(Base):
         return User
 
     def get_by_id(self, id):
+
         User = {}
         try:
-            self.cursor.execute(f"SELECT * FROM {self.table_name} WHERE id=?", (id,))
-            row = self.cursor.fetchone()
+            row = super().get_by_id(id)
             User["email"] = row["email"]
             User["password"] = row["password"]
             User["id"] = row["id"]
@@ -57,8 +57,7 @@ class user(Base):
     def get_all(self):
         Users = []
         try:
-            self.cursor.execute(f"SELECT * FROM {self.table_name}")
-            rows = self.cursor.fetchall()
+            rows = super().get_all()
             print(rows)
             for row in rows:
                 User = {}
@@ -74,17 +73,3 @@ class user(Base):
 User = user(
     "testing.db",
 )
-
-
-# class deneme:
-#     def __init__(self, id, email, password):
-#         self.id = id
-#         self.email = email
-#         self.password = password
-
-
-# x = deneme(1, "apo@test.com", "121599")
-# email = "apo@test.com"
-# User.create(x)
-# y = User.get_by_email(email)
-# print(y["password"])

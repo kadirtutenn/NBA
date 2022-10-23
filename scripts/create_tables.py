@@ -8,6 +8,20 @@ INIT_STATEMENTS = [
         password TEXT NOT NULL
     )
     """,
+    """
+    CREATE TABLE IF NOT EXISTS teams (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        season TEXT NOT NULL
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS players (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        surname TEXT NOT NULL
+    )
+    """,
 ]
 
 
